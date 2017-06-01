@@ -6,7 +6,7 @@ contract Lotto {
   address public winner;
 
   uint prize_total = 10 ether;
-  uint prize_tally = 0;
+  uint prize_tally = 0 ether;
   uint ticket_price = 1 ether;
 
   event ticket_bought(
@@ -20,7 +20,7 @@ contract Lotto {
   function buy_ticket() public payable {
     if(prize_tally < prize_total){
       participants.push(msg.sender);
-      prize_tally += ticket_price;
+      prize_tally += msg.value;
 
       ticket_bought(prize_tally);
     }
