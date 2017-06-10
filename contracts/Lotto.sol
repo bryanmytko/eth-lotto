@@ -13,6 +13,11 @@ contract Lotto {
     uint _prize_tally
   );
 
+  /* @TODO Remove: For debugging */
+  event console_log(
+    uint _log
+  );
+
   function Lotto(){
     owner = msg.sender;
   }
