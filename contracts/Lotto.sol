@@ -18,6 +18,10 @@ contract Lotto {
     uint _log
   );
 
+  event winner_chosen(
+    address winner
+  );
+
   function Lotto(uint _prize_total, uint _ticket_price){
     owner = msg.sender;
     prize_total = _prize_total;
@@ -30,10 +34,16 @@ contract Lotto {
       prize_tally += msg.value;
 
       ticket_bought(prize_tally);
-      return true;
-    } else {
-      return false;
+
+      if(prize_tally == prize_total) determine_winner();
     }
+  }
+
+  function determine_winner() private {
+    // Find a winner randomly
+    winner = participants[1];
+    // Pay them
+    winner_chosen(winner);
   }
 
   function get_participants() constant public returns(address[]){
