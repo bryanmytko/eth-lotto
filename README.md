@@ -5,4 +5,4 @@
 
 ### Testing
 
-`truffle test test/lotto.js`
+`truffle test`
