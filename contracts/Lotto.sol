@@ -24,6 +24,7 @@ contract Lotto {
 
   function Lotto(uint _prize_total, uint _ticket_price){
     owner = msg.sender;
+    winner = 0x0000000000000000000000000000000000000000;
     prize_total = _prize_total;
     ticket_price = _ticket_price;
   }
@@ -39,7 +40,7 @@ contract Lotto {
     }
   }
 
-  function determine_winner() private {
+  function determine_winner() private{
     // Find a winner randomly
     winner = participants[1];
     // Pay them

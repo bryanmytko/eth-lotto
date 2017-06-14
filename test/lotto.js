@@ -1,4 +1,5 @@
-var Lotto = artifacts.require("./Lotto.sol");
+let Lotto = artifacts.require("./Lotto.sol");
+const MAX_TICKETS = 4;
 
 // Constructor notes for test different deploys:
 // https://github.com/trufflesuite/truffle/issues/159
@@ -21,7 +22,7 @@ contract('Lotto', function(accounts) {
 
   it("should not purchase tickets if the pot is full", function(){
     return Lotto.deployed().then(function(instance){
-      for(let i = 0; i < 4; i++){
+      for(let i = 0; i < MAX_TICKETS; i++){
         instance.buy_ticket({
           from: accounts[1],
           to: instance.address,
@@ -32,7 +33,29 @@ contract('Lotto', function(accounts) {
     }).then(function(instance){
       return instance.get_tally.call();
     }).then(function(tally){
-      assert.equal(tally.valueOf(), 3, "Should not purchase 4 tickets.");
+      assert.equal(
+        tally.valueOf(),
+        3,
+        `Should not purchase ${MAX_TICKETS} tickets.`
+      );
+    });
+  });
+
+  it("should find a winner when the pot is full", function(){
+    return Lotto.deployed().then(function(instance){
+      for(let i = 0; i < MAX_TICKETS; i++){
+        instance.buy_ticket({
+          from: accounts[1],
+          to: instance.address,
+          value: 1
+        });
+      }
+      return instance;
+    }).then(function(instance){
+      return instance.winner.call();
+    }).then(function(winner){
+        console.log(winner);
+        assert(1, 0x0000000000000000000000000000000000000000);
     });
   });
 });
