@@ -45,7 +45,7 @@ contract('Lotto', function(accounts) {
     return Lotto.deployed().then(function(instance){
       for(let i = 0; i < MAX_TICKETS; i++){
         instance.buy_ticket({
-          from: accounts[1],
+          from: accounts[i],
           to: instance.address,
           value: 1
         });
@@ -54,8 +54,7 @@ contract('Lotto', function(accounts) {
     }).then(function(instance){
       return instance.winner.call();
     }).then(function(winner){
-        console.log(winner);
-        assert(1, 0x0000000000000000000000000000000000000000);
+      assert.include(accounts, winner);
     });
   });
 });
